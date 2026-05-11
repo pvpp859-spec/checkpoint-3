@@ -1,0 +1,51 @@
+from cliente import Cliente
+from ContaCorrente import ContaCorrente
+from ContaPoupança import ContaPoupanca
+
+cliente1 = Cliente("João", "123.456.789-00")
+
+print("Escolha o tipo de conta:")
+print("1 - Conta Corrente")
+print("2 - Conta Poupança")
+
+tipo = input("Opção: ")
+
+if tipo == "1":
+    conta = ContaCorrente(1001, cliente1)
+else:
+    conta = ContaPoupanca(1002, cliente1)
+
+while True:
+    print("\n===== TERMINAL BANK =====")
+    print("1 - Ver saldo")
+    print("2 - Depositar")
+    print("3 - Sacar")
+    print("4 - Render juros")
+    print("5 - Sair")
+
+    opcao = input("Escolha uma opção: ")
+
+    match opcao:
+        case "1":
+            print(f"Saldo atual: R$ {conta.get_saldo():.2f}")
+
+        case "2":
+            valor = float(input("Digite o valor do depósito: "))
+            conta.depositar(valor)
+
+        case "3":
+            valor = float(input("Digite o valor do saque: "))
+            conta.sacar(valor)
+
+        case "4":
+            if isinstance(conta, ContaPoupanca):
+                conta.render_juros()
+            else:
+                print("Conta Corrente não possui rendimento de juros.")
+
+        case "5":
+            print("Saindo do Terminal Bank...")
+            break
+
+        case _:
+            print("Opção inválida.")
